@@ -43,11 +43,27 @@ To understand the kaggle dataset we are working with, it is important to first p
 5. 
 
 
+### Logistic Regression model
 
 
 
 
 
+
+### KNN Model
+
+
+
+
+### Evaluation Metrics
+
+- There are multiple metrics for evaluating classification problems. However since this dataset isn't imbalanced, we will be evaluating the performance of our two algorithms by measuring their accuracy. Furthermore, a confusion matrix will be visualized so other metrics such as precision and recall can be considered later. 
+
+
+
+### Future Consideration
+
+- I will be deploying this model online so our algorithm will be able to determine whether you may have the presence of diabetes or not. 
 
 
 
