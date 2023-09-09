@@ -7,7 +7,7 @@ Predicting the presence of diabetes (1) vs the absence of diabetes (0)
 
 Logistic Regression vs Knn on predicting the presence of diabetes
 
-Why are we using these two models?
+**Why are we using these two models?**
 
 - Both are suitable for binary classification
 
@@ -29,18 +29,21 @@ Why are we using these two models?
 
 To understand the kaggle dataset we are working with, it is important to first performe some baseline exploratory analysis. To do this we must first ask ourselves a few questions:
 
-1. Is this dataset imbalanced? 
+1. **Is this dataset imbalanced?**
 - We can measure this by grouping each class to find the proportion of each class relative to the number of examples. 
 
-2. Is this dataset normally distributed?
+2. **Is this dataset normally distributed?**
 - 
 
-3. Does multicolinearity exist? 
+3. **Does multicolinearity exist?**
 
 
-4. Which features are important? Which features are good predictors for classification?
+4. **Which features are important? Which features are good predictors for classification?**
 
 5. 
+
+
+
 
 
 
