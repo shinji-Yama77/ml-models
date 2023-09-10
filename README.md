@@ -43,7 +43,21 @@ To understand the kaggle dataset we are working with, it is important to first p
 5. 
 
 
-### Logistic Regression model
+## Logistic Regression model
+
+**Sigmoid function**: We define the sigmoid function so that the outputs are calculated to be between 0 and 1
+
+**Cost function**: Defined as the total average loss. Binary classification uses a cross entropy. 
+
+**Gradient Descent**: Calculating the partial derivatives for all parameters (weights, biases) with respect to the cost function. 
+
+**Update step**: We simulatenously update the weights and biases by multiplying the learning rate by the partial derivatives for each feature. 
+
+__**Analysis**__: By visualizing the cost function vs iteration graph, I noticed that feature scaling was necessary as it occured to be oscillating. By utilizing the standard scaler library and normalizing the training data, the cost function started to decrease with every iteration. 
+
+__**Peformance**__: 
+
+
 
 
 
