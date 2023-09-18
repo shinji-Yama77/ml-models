@@ -29,16 +29,24 @@ Logistic Regression vs Knn on predicting the presence of diabetes
 
 To understand the kaggle dataset we are working with, it is important to first performe some baseline exploratory analysis. To do this we must first ask ourselves a few questions:
 
-1. **Is this dataset imbalanced?**
-- We can measure this by grouping each class to find the proportion of each class relative to the number of examples. 
+
+1. **Are there any missing data?**
+- There is no missing data=
+
 
 2. **Is this dataset normally distributed?**
 - 
 
-3. **Does multicolinearity exist?**
+3. **Is this dataset imbalanced?**
+- We can measure this by grouping each class to find the proportion of each class relative to the number of examples. 
 
 
-4. **Which features are important? Which features are good predictors for classification?**
+4. **Does multicolinearity exist?**
+
+
+5. **Which features are important? Which features are good predictors for classification?**
+
+
 
 5. 
 
