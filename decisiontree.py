@@ -1,5 +1,5 @@
 import numpy as np
-import node
+from node import Node
 from collections import Counter
 
 class ID3:
@@ -13,7 +13,7 @@ class ID3:
         # calculate cross_entropy for that node
         entropy = 0
         if (len(node_indices) != 0):
-            filter_first = y[node_indices] # filter indices 
+            filter_first = y[node_indices]  # filter indices 
             p_1 = len(filter_first[filter_first==1]) / len(node_indices) # calculating the probability that y=1
             if (p_1 == 1) or (p_1 == 0):
                 entropy = 0
@@ -33,20 +33,21 @@ class ID3:
         left = w_left * self.cal_entropy(y, left_indices)
         right = w_right * self.cal_entropy(y, right_indices)
 
-        total_gain = self.cal_entropy(y, y) - (left + right)
+        all_indices = np.arange(len(y))
 
+        total_gain = self.cal_entropy(y, all_indices) - (left + right)
         return total_gain
         
 
-    def find_split(self, X, y, feature_names):
+    def find_split(self, X, y):
         # split the data on the best information gain
         # for i in feature:
         # calculate crossentropy for each
-        best_gain = 0
+        best_gain = -1
         best_thresh = 0
-        best_feature = ""
+        best_feature = 0
 
-        for i, feature in enumerate(feature_names):
+        for i in range(self.num_features):
             total = np.unique(X[:, i]) # getting all unique values
             vals = X[:, i] 
             for j, threshold in enumerate(total): # loop through each unique threshold value
@@ -79,10 +80,10 @@ class ID3:
 
     def build_tree(self, X, y, current_depth):
 
-        if (current_depth == self.depth):
+        if (current_depth == self.depth) or (len(np.unique(y)) == 1):
             # return the most common value
             val_label = self.classify(y)
-            return node(label=val_label)
+            return Node(label=val_label)
         else:
             # convert x to indices first
             best_feature, best_thresh = self.find_split(X, y)
@@ -94,7 +95,7 @@ class ID3:
             
             left_n = self.build_tree(left_X, left_Y, current_depth+1)
             right_n = self.build_tree(right_X, right_Y, current_depth+1)
-            return node(left=left_n, right=right_n, threshold=best_thresh, feature=best_feature)
+            return Node(left=left_n, right=right_n, threshold=best_thresh, feature=best_feature)
 
     def classify(self, y): # find the most common occurence
         data = Counter(y)
