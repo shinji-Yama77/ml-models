@@ -1,5 +1,6 @@
 import numpy as np
 import node
+from collections import Counter
 
 class ID3:
 
@@ -7,8 +8,6 @@ class ID3:
         self.depth = depth
         self.num_features = num_features
         self.rootNode = None # set rootnode later to fit when building tree
-
-
 
     def cal_entropy(self, y, node_indices):
         # calculate cross_entropy for that node
@@ -81,9 +80,9 @@ class ID3:
     def build_tree(self, X, y, current_depth):
 
         if (current_depth == self.depth):
-            # return the most common value 
-            return node()
-            
+            # return the most common value
+            val_label = self.classify(y)
+            return node(label=val_label)
         else:
             # convert x to indices first
             best_feature, best_thresh = self.find_split(X, y)
@@ -97,11 +96,12 @@ class ID3:
             right_n = self.build_tree(right_X, right_Y, current_depth+1)
             return node(left=left_n, right=right_n, threshold=best_thresh, feature=best_feature)
 
-    def classify(): # find the most common occurence
-        
+    def classify(self, y): # find the most common occurence
+        data = Counter(y)
+        return data.most_common(1)[0][0] # find the most common occurence
 
 
-    def fit(X, y):
+    def fit(self, X, y):
         self.rootNode = self.build_tree(X,y, 0) # receives X, y in numpy array format
 
         return self.rootNode
