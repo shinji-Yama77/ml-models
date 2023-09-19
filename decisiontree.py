@@ -31,10 +31,10 @@ class ID3:
         w_left = len(left_indices) / total_examples
         w_right = len(right_indices) / total_examples
 
-        left = w_left * self.cal_entropy(left_indices)
-        right = w_right * self.cal_entropy(right_indices)
+        left = w_left * self.cal_entropy(y, left_indices)
+        right = w_right * self.cal_entropy(y, right_indices)
 
-        total_gain = self.cal_entropy(y) - (left + right)
+        total_gain = self.cal_entropy(y, y) - (left + right)
 
         return total_gain
         
@@ -63,16 +63,11 @@ class ID3:
         
         return best_feature, best_thresh
 
-        pass
-
-
     def split_dataset(self, X, best_feature, best_thresh):
-        
-
+    
         left_indices = np.where(X[:, best_feature] <= best_thresh)[0]
         right_indices = np.where(X[:, best_feature] > best_thresh)[0]
-        
-
+    
         return left_indices, right_indices
     
 
@@ -86,8 +81,8 @@ class ID3:
     def build_tree(self, X, y, current_depth):
 
         if (current_depth == self.depth):
-
-            # return node()
+            # return the most common value 
+            return node()
             
         else:
             # convert x to indices first
@@ -95,16 +90,16 @@ class ID3:
             left_indices, right_indices = self.split_dataset(X, best_feature, best_thresh)
             left_X, left_Y = self.convert(X, y, left_indices)
             right_X, right_Y = self.convert(X, y, right_indices)
-
             
-            left = self.build_tree(left_X, left_Y, current_depth+1)
-            right = self.build_tree(right_X, right_Y, current_depth+1)
-            return node()
+            # recursion to build the tree
+            
+            left_n = self.build_tree(left_X, left_Y, current_depth+1)
+            right_n = self.build_tree(right_X, right_Y, current_depth+1)
+            return node(left=left_n, right=right_n, threshold=best_thresh, feature=best_feature)
+
+    def classify(): # find the most common occurence
         
 
-        # base case = if training examples equal to zero
-
-        #
 
     def fit(X, y):
         self.rootNode = self.build_tree(X,y, 0) # receives X, y in numpy array format
