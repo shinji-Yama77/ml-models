@@ -105,7 +105,32 @@ class ID3:
     def fit(self, X, y):
         self.rootNode = self.build_tree(X,y, 0) # receives X, y in numpy array format
 
-        return self.rootNode
+        return self.rootNode # could be none too
+    
+
+    def predict(self, X):
+        pred_vals = []
+        for i in range(len(X)):
+            pred_val = self.traverse(X[i], self.rootNode)
+            pred_vals.append(pred_val)
+
+        return pred_vals
+
+    def traverse(self, row, node):
+
+        if (node.left == None) and (node.right == None):
+            return node.label
+        else:
+            if (row[node.feature] <= node.threshold):
+                return self.traverse(row, node.left)
+            else:
+                return self.traverse(row, node.right)
+            
+
+    
+
+
+
 
         
         
