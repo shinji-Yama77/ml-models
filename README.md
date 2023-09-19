@@ -5,7 +5,7 @@ Predicting the presence of diabetes (1) vs the absence of diabetes (0)
 
 ## Research Question
 
-Logistic Regression vs Knn on predicting the presence of diabetes
+Logistic Regression vs Knn vs Decision Tree on predicting the presence of diabetes
 
 **Why are we using these two models?**
 
@@ -73,6 +73,14 @@ __**Peformance**__:
 
 
 ### KNN Model
+
+
+
+
+
+
+
+### Decision Tree Model
 
 
 
