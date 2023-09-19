@@ -4,13 +4,14 @@ from collections import Counter
 
 class ID3:
 
-    def __init__(self, depth=None, num_features=None):
-        self.depth = depth
-        self.num_features = num_features
+    # parameters: stores the max depth for tree
+    def __init__(self, mx_depth=None):
+        self.mx_depth = mx_depth
         self.rootNode = None # set rootnode later to fit when building tree
 
+
+    # calculates entropy for each node
     def cal_entropy(self, y, node_indices):
-        # calculate cross_entropy for that node
         entropy = 0
         if (len(node_indices) != 0):
             filter_first = y[node_indices]  # filter indices 
@@ -21,11 +22,11 @@ class ID3:
                 entropy = -p_1*np.log2(p_1)-(1-p_1)*np.log2(1-p_1)
         return entropy
         
+
+    # computes the gain for specific feature and threshold value
     def compute_gain(self, left_indices, right_indices, y):
-        # calculate info   rmation gain for that specific split
 
         total_examples = len(y)
-        # weighted averages 
 
         w_left = len(left_indices) / total_examples
         w_right = len(right_indices) / total_examples
@@ -38,16 +39,14 @@ class ID3:
         total_gain = self.cal_entropy(y, all_indices) - (left + right)
         return total_gain
         
-
+    # find the best_feature and best_threshold by calculating the gain 
+    # for all the possible features and thresholds for every feature
     def find_split(self, X, y):
-        # split the data on the best information gain
-        # for i in feature:
-        # calculate crossentropy for each
         best_gain = -1
         best_thresh = 0
         best_feature = 0
 
-        for i in range(self.num_features):
+        for i in range(X.shape[1]): # number of features in dataset
             total = np.unique(X[:, i]) # getting all unique values
             vals = X[:, i] 
             for j, threshold in enumerate(total): # loop through each unique threshold value
@@ -71,16 +70,18 @@ class ID3:
         return left_indices, right_indices
     
 
-    def convert(self, X, y, indices):
+    def convert(self, X, y, indices): # converts into numpy arrays with all feature values
         new_X = X[indices]
         new_Y = y[indices]
 
         return new_X, new_Y
 
 
-    def build_tree(self, X, y, current_depth):
+    # build_tree: method stores the best_feature and threshold for each node
 
-        if (current_depth == self.depth) or (len(np.unique(y)) == 1):
+    def build_tree(self, X, y, current_depth): 
+
+        if (current_depth == self.mx_depth) or (len(np.unique(y)) == 1):
             # return the most common value
             val_label = self.classify(y)
             return Node(label=val_label)
@@ -97,7 +98,8 @@ class ID3:
             right_n = self.build_tree(right_X, right_Y, current_depth+1)
             return Node(left=left_n, right=right_n, threshold=best_thresh, feature=best_feature)
 
-    def classify(self, y): # find the most common occurence
+    # find the most common occurence and classifies the node label
+    def classify(self, y): 
         data = Counter(y)
         return data.most_common(1)[0][0] # find the most common occurence
 
@@ -116,6 +118,7 @@ class ID3:
 
         return pred_vals
 
+    # returns the node label for each data point x
     def traverse(self, row, node):
 
         if (node.left == None) and (node.right == None):
