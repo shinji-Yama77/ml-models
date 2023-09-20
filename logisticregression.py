@@ -15,6 +15,10 @@ class LogisticRegression:
 
         return g
     
+    def single_cost(self):
+
+        pass
+        
 
 
     

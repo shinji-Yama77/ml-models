@@ -1,13 +1,21 @@
+# Works for both continous and discrete(binary) features
+# Future implementation: works for regression
+# additional optimizations: pruning
+
+
 import numpy as np
 from node import Node
 from collections import Counter
 
 class ID3:
 
+
     # parameters: stores the max depth for tree
-    def __init__(self, mx_depth=None):
+    def __init__(self, mx_depth=None, mx_samples=1, min_thresh=0.01):
         self.mx_depth = mx_depth
         self.rootNode = None # set rootnode later to fit when building tree
+        self.mx_samples = mx_samples
+        self.min_thresh = min_thresh
 
 
     # calculates entropy for each node
@@ -60,10 +68,9 @@ class ID3:
                     best_feature = i
 
         
-        return best_feature, best_thresh
+        return best_feature, best_thresh, best_gain
 
     def split_dataset(self, X, best_feature, best_thresh):
-    
         left_indices = np.where(X[:, best_feature] <= best_thresh)[0]
         right_indices = np.where(X[:, best_feature] > best_thresh)[0]
     
@@ -73,30 +80,31 @@ class ID3:
     def convert(self, X, y, indices): # converts into numpy arrays with all feature values
         new_X = X[indices]
         new_Y = y[indices]
-
         return new_X, new_Y
 
 
     # build_tree: method stores the best_feature and threshold for each node
+    # returns node is hits leaf node
+    # defined by depth, samples, and if gain is below minimum threshold
 
     def build_tree(self, X, y, current_depth): 
-
-        if (current_depth == self.mx_depth) or (len(np.unique(y)) == 1):
-            # return the most common value
+        if (current_depth == self.mx_depth) or (len(np.unique(y)) == 1) or (len(y) <= self.mx_samples):
             val_label = self.classify(y)
             return Node(label=val_label)
         else:
-            # convert x to indices first
-            best_feature, best_thresh = self.find_split(X, y)
-            left_indices, right_indices = self.split_dataset(X, best_feature, best_thresh)
-            left_X, left_Y = self.convert(X, y, left_indices)
-            right_X, right_Y = self.convert(X, y, right_indices)
+            best_feature, best_thresh, best_gain = self.find_split(X, y)
+            while best_gain > self.min_thresh: 
+                left_indices, right_indices = self.split_dataset(X, best_feature, best_thresh)
+                left_X, left_Y = self.convert(X, y, left_indices)
+                right_X, right_Y = self.convert(X, y, right_indices)
             
-            # recursion to build the tree
-            
-            left_n = self.build_tree(left_X, left_Y, current_depth+1)
-            right_n = self.build_tree(right_X, right_Y, current_depth+1)
-            return Node(left=left_n, right=right_n, threshold=best_thresh, feature=best_feature)
+                # recursion to build the tree
+                left_n = self.build_tree(left_X, left_Y, current_depth+1)
+                right_n = self.build_tree(right_X, right_Y, current_depth+1)
+                return Node(left=left_n, right=right_n, threshold=best_thresh, feature=best_feature)
+            else:
+                val_label = self.classify(y)
+                return Node(label=val_label)
 
     # find the most common occurence and classifies the node label
     def classify(self, y): 
@@ -106,21 +114,17 @@ class ID3:
 
     def fit(self, X, y):
         self.rootNode = self.build_tree(X,y, 0) # receives X, y in numpy array format
-
         return self.rootNode # could be none too
     
-
     def predict(self, X):
         pred_vals = []
         for i in range(len(X)):
             pred_val = self.traverse(X[i], self.rootNode)
             pred_vals.append(pred_val)
-
         return pred_vals
 
     # returns the node label for each data point x
     def traverse(self, row, node):
-
         if (node.left == None) and (node.right == None):
             return node.label
         else:
