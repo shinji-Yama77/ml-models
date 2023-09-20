@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/shinjiyamashita/Desktop/DiabetesProject/shinji-ml-journey-/ml-venv"
+VIRTUAL_ENV="/Users/shinjiyamashita/Desktop/ml-journey/ml-models/ml-venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

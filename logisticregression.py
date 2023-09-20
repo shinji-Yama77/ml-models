@@ -29,7 +29,7 @@ class LogisticRegression:
         # receives b 
         # receives w
 
-
+        
 
 
         for i in range(m):

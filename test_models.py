@@ -17,8 +17,7 @@ class TestTree(unittest.TestCase):
         id31 = ID3()
         entropy = id31.cal_entropy(self.y1, list)
         entropy1 = id31.cal_entropy(self.y1, list1)
-        print(entropy)
-        print(entropy1)
+
 
 
 
@@ -36,8 +35,8 @@ class TestLogistic(unittest.TestCase):
 
     def setUp(self):
         pass
-
-
+    
+        
     def test_sigmoid(self):
         Logisticregression = LogisticRegression()
         output = Logisticregression.sigmoid(0)
