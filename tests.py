@@ -28,6 +28,7 @@ X_train, X_test, y_train, y_test = train_test_split(X,y)
 
 clf = ID3(mx_depth=10)
 
+
 root = clf.fit(X_train, y_train)
 
 y_pred = clf.predict(X_test)
