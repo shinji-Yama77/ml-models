@@ -116,7 +116,7 @@ class ID3:
         self.rootNode = self.build_tree(X,y, 0) # receives X, y in numpy array format
         return self.rootNode # could be none too
     
-    def predict(self, X):
+    def predicts(self, X):
         pred_vals = []
         for i in range(len(X)):
             pred_val = self.traverse(X[i], self.rootNode)
@@ -132,7 +132,6 @@ class ID3:
                 return self.traverse(row, node.left)
             else:
                 return self.traverse(row, node.right)
-            
 
     
 
