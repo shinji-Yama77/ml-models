@@ -40,6 +40,7 @@ class TestLogistic(unittest.TestCase):
     def test_sigmoid(self):
         Logisticregression = LogisticRegression()
         output = Logisticregression.sigmoid(0)
+        print(output)
         self.assertEqual(output, 0.5)
         
 

@@ -1,7 +1,19 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
+
+
 df = pd.read_csv('healthcare.csv')
+
+
+
+
+
+
+
+
 
 
 from decisiontree import ID3
@@ -24,20 +36,22 @@ def accuracy(y_true, y_pred):
 
 X_train, X_test, y_train, y_test = train_test_split(X,y)
 
+lre = LogisticRegression()
+
+#scaler = StandardScaler()
+#X_train_standardized = scaler.fit_transform(X_train)
+
+
+final_w, final_b, all_costs = lre.fit(X_train, y_train)
+print(all_costs)
+
+y_pred = lre.predict(X_train)
 
 
 
-clf = LogisticRegression()
 
 
-final_w, final_b = clf.fit(X_train, y_train)
-
-y_pred = clf.predict(X_test)
-
-
-
-
-acc = accuracy(y_test, y_pred)
+acc = accuracy(y_train, y_pred)
 
 print(acc)
 
