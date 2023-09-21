@@ -5,6 +5,7 @@ df = pd.read_csv('healthcare.csv')
 
 
 from decisiontree import ID3
+from logisticregression import LogisticRegression
 
 
 df = pd.read_csv('healthcare.csv')
@@ -19,27 +20,27 @@ def accuracy(y_true, y_pred):
 
 
 
-print(X.shape[1])
+
 
 X_train, X_test, y_train, y_test = train_test_split(X,y)
 
 
 
 
-clf = ID3(mx_depth=10)
+clf = LogisticRegression()
 
 
-root = clf.fit(X_train, y_train)
+final_w, final_b = clf.fit(X_train, y_train)
 
 y_pred = clf.predict(X_test)
-y_pred1 = clf.predict(X_train)
+
 
 
 
 acc = accuracy(y_test, y_pred)
-acc1 = accuracy(y_train, y_pred1)
+
 print(acc)
-print(acc1)
+
 
 
 

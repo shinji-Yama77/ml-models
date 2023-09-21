@@ -24,7 +24,7 @@ class TestTree(unittest.TestCase):
     def test_find_split(self):
         # Test find_split function
         id3 = ID3()
-        best_feature, best_thresh = id3.find_split(self.X, self.y)
+        best_feature, best_thresh, best_gain = id3.find_split(self.X, self.y)
         print(best_feature)
         self.assertEqual(best_feature, 2)  # Update with your expected value
 
