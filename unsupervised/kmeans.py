@@ -28,7 +28,7 @@ class KMeans():
             idx[i] = np.argmin(np.sum(X[i] - centroids, axis=1)**2)
 
         return idx
-    
+
     # calculates the new centroid by taking the average
     def new_centroids(self, X, indices):
 
@@ -51,10 +51,8 @@ class KMeans():
         # assuming X is a numpy array 
         rands = np.random.permutation(X.shape[0])
         centroids = X[rands[:self.clusters]]
-
         for i in range(self.max_iters):
-            idx = self.compute_indices(X, centroids)
-
+            idx= self.compute_indices(X, centroids)
             centroids = self.new_centroids(X, idx)
 
 
