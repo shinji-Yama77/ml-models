@@ -24,8 +24,8 @@ class KMeans():
             # this code subtracts each array in centroids from 
             # the array in X[i]. Each array in centroids has the same
             # number of feature values (dimensions) as X[i]
-            distances = np.sum((X[i] - centroids) ** 2, axis=1)
-            idx[i] = np.argmin(distances)
+            
+            idx[i] = np.argmin(np.sum(X[i] - centroids, axis=1)**2)
 
         return idx
     
@@ -39,13 +39,11 @@ class KMeans():
         for i in range(m):
             centroid_val = indices[i]
             all[centroid_val] += 1
-            for j in range(n):
-                centroids[centroid_val][j] += X[i][j]
+            centroids[centroid_val] += X[i]
 
         for i in range(self.clusters):
             if (all[i] != 0):
-                for j in range(n):
-                    centroids[i][j] = centroids[i][j] / all[i]
+                centroids[i] = centroids[i] / all[i]
 
         return centroids
 
