@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score
 
 
 
+
 df = pd.read_csv('healthcare.csv')
 
 X = df.drop(columns=['Id', 'Outcome']).to_numpy()
